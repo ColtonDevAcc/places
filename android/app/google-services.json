@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "17533358165",
+    "project_id": "places-8f885",
+    "storage_bucket": "places-8f885.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:17533358165:android:7d0291140e7b02def7c4dc",
+        "android_client_info": {
+          "package_name": "com.enigmastudios.places"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "17533358165-g4e9s8cojfhptmv4gjmjugsncs6hrvdn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7G0Y9lnGPzeTc1b56gCiVaJTTTih732U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "17533358165-g4e9s8cojfhptmv4gjmjugsncs6hrvdn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "17533358165-6cggapidhrsedu70jgrl52e9lmbl3f6t.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.enigmastudios.places"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
