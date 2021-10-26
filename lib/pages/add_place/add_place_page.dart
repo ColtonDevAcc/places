@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:places/pages/add_place/_widgets/bottomAddPlace_widget.dart';
 
-class AddPlace_Page extends StatelessWidget {
+final titleTextFieldProvider = StateProvider<String>((ref) => "");
+final priceRatingFieldProvider = StateProvider<String>((ref) => 'null');
+final overallRatingFieldProvider = StateProvider<String>((ref) => 'null');
+final networkImageProvider = StateProvider<String>((ref) => 'https://picsum.photos/600/1200');
+
+class AddPlace_Page extends ConsumerWidget {
   const AddPlace_Page({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ScopedReader watch) {
     return Scaffold(
       body: Stack(
         children: [
@@ -12,7 +19,7 @@ class AddPlace_Page extends StatelessWidget {
             constraints: BoxConstraints.expand(),
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: NetworkImage('https://picsum.photos/600/1200'),
+                image: NetworkImage(watch(networkImageProvider).state),
                 fit: BoxFit.cover,
               ),
             ),
@@ -39,141 +46,6 @@ class AddPlace_Page extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class BottomAddPlace_Widget extends StatelessWidget {
-  const BottomAddPlace_Widget({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
-            children: [
-              TextField(
-                style: TextStyle(color: Colors.white),
-                decoration: InputDecoration(
-                  hintText: 'Enter your title here...',
-                  hintStyle: TextStyle(color: Colors.white.withOpacity(.8)),
-                  enabled: true,
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                    borderSide: BorderSide(color: Colors.green),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                    borderSide: BorderSide(color: Colors.green),
-                  ),
-                  floatingLabelBehavior: FloatingLabelBehavior.always,
-                  labelText: 'Title',
-                  labelStyle: TextStyle(color: Colors.white),
-                ),
-              ),
-            ],
-          ),
-          AddPlaceDropDowns(),
-          SizedBox(height: 30),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              TextButton(
-                onPressed: () {},
-                child: Container(
-                  width: MediaQuery.of(context).size.width * .43,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.white),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(30.0),
-                    child: Center(
-                      child: Text(
-                        'Auto Populate',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              TextButton(
-                onPressed: () {},
-                child: Container(
-                  width: MediaQuery.of(context).size.width * .43,
-                  decoration: BoxDecoration(
-                    color: Colors.green,
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(30.0),
-                    child: Center(
-                      child: Text(
-                        'Add Place',
-                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class AddPlaceDropDowns extends StatefulWidget {
-  const AddPlaceDropDowns({Key? key}) : super(key: key);
-
-  @override
-  State<AddPlaceDropDowns> createState() => _AddPlaceDropDownsState();
-}
-
-class _AddPlaceDropDownsState extends State<AddPlaceDropDowns> {
-  String? dropdownValue;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
-      child: DropdownButton<String>(
-        value: dropdownValue,
-        icon: const Icon(Icons.arrow_drop_down_outlined, color: Colors.green),
-        iconSize: 24,
-        elevation: 16,
-        style: const TextStyle(color: Colors.black),
-        hint: Text(
-          'Select a price rating',
-          style: TextStyle(color: Colors.white),
-        ),
-        underline: Container(
-          height: 2,
-          color: Colors.green,
-        ),
-        onChanged: (String? newValue) {
-          setState(() {
-            dropdownValue = newValue!;
-          });
-        },
-        items: <String>[
-          '\$ ',
-          '\$\$ ',
-          '\$\$ ',
-        ].map<DropdownMenuItem<String>>((String value) {
-          return DropdownMenuItem<String>(
-            value: value,
-            child: Center(
-              child: Text(value),
-            ),
-          );
-        }).toList(),
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:places/controllers/auth_controller.dart';
 import 'package:places/pages/add_place/add_place_page.dart';
+import 'package:places/pages/home/widgets/expensive_places_widget.dart';
 import 'package:places/pages/home/widgets/recent_places_widget.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -72,7 +73,7 @@ class HomePage extends HookWidget {
               SizedBox(height: 20),
               RecentPlaces_Widget(),
               SizedBox(height: 20),
-              RecentPlaces_Widget(),
+              Expensive_places_Widget(),
             ],
           ),
         ),

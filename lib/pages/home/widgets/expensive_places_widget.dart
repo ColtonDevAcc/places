@@ -6,8 +6,8 @@ import 'package:places/pages/home/widgets/place_card_widget.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:places/pages/place_details/placeDetails_page.dart';
 
-class RecentPlaces_Widget extends ConsumerWidget {
-  const RecentPlaces_Widget({Key? key}) : super(key: key);
+class Expensive_places_Widget extends ConsumerWidget {
+  const Expensive_places_Widget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {
@@ -18,7 +18,7 @@ class RecentPlaces_Widget extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Recent Places',
+              'Most Expensive Places',
               textScaleFactor: 1.2,
               style: TextStyle(
                 color: Colors.black,
@@ -44,10 +44,11 @@ class RecentPlaces_Widget extends ConsumerWidget {
           child: watch(PlaceListControllerProvider).when(
             data: (place) {
               List<Place> places = place;
+
               //list sort
               //!TODO: make this a query by adding querry type to PlaceRepository
-              places.sort(
-                (a, b) => b.publishDate.compareTo(a.publishDate),
+              place.sort(
+                (a, b) => b.price.length.compareTo(a.price.length),
               );
 
               return ListView.builder(

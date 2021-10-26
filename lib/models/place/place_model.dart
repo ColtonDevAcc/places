@@ -12,16 +12,18 @@ abstract class Place implements _$Place {
   factory Place({
     String? id,
     required String name,
-    required double rating,
-    required double price,
+    required String rating,
+    required String price,
     required DateTime publishDate,
+    required String networkImage,
   }) = _Place;
 
   factory Place.empty() => Place(
         name: '',
-        rating: 0.0,
-        price: 0.0,
-        publishDate: DateTime.now(),
+        rating: '',
+        price: '',
+        networkImage: 'https://picsum.photos/800/400',
+        publishDate: Timestamp.now().toDate(),
       );
 
   factory Place.fromJson(Map<String, dynamic> json) => _$PlaceFromJson(json);

@@ -10,9 +10,10 @@ _$_Place _$_$_PlaceFromJson(Map<String, dynamic> json) {
   return _$_Place(
     id: json['id'] as String?,
     name: json['name'] as String,
-    rating: (json['rating'] as num).toDouble(),
-    price: (json['price'] as num).toDouble(),
+    rating: json['rating'] as String,
+    price: json['price'] as String,
     publishDate: DateTime.parse(json['publishDate'] as String),
+    networkImage: json['networkImage'] as String,
   );
 }
 
@@ -22,4 +23,5 @@ Map<String, dynamic> _$_$_PlaceToJson(_$_Place instance) => <String, dynamic>{
       'rating': instance.rating,
       'price': instance.price,
       'publishDate': instance.publishDate.toIso8601String(),
+      'networkImage': instance.networkImage,
     };

@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:places/repositories/auth_repositorie.dart';
+import 'package:places/repositories/auth_repository.dart';
 import 'package:riverpod/riverpod.dart';
 
 final authControllerProvider = StateNotifierProvider<AuthController, User?>(

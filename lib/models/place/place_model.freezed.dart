@@ -23,15 +23,17 @@ class _$PlaceTearOff {
   _Place call(
       {String? id,
       required String name,
-      required double rating,
-      required double price,
-      required DateTime publishDate}) {
+      required String rating,
+      required String price,
+      required DateTime publishDate,
+      required String networkImage}) {
     return _Place(
       id: id,
       name: name,
       rating: rating,
       price: price,
       publishDate: publishDate,
+      networkImage: networkImage,
     );
   }
 
@@ -47,9 +49,10 @@ const $Place = _$PlaceTearOff();
 mixin _$Place {
   String? get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  double get rating => throw _privateConstructorUsedError;
-  double get price => throw _privateConstructorUsedError;
+  String get rating => throw _privateConstructorUsedError;
+  String get price => throw _privateConstructorUsedError;
   DateTime get publishDate => throw _privateConstructorUsedError;
+  String get networkImage => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -63,9 +66,10 @@ abstract class $PlaceCopyWith<$Res> {
   $Res call(
       {String? id,
       String name,
-      double rating,
-      double price,
-      DateTime publishDate});
+      String rating,
+      String price,
+      DateTime publishDate,
+      String networkImage});
 }
 
 /// @nodoc
@@ -83,6 +87,7 @@ class _$PlaceCopyWithImpl<$Res> implements $PlaceCopyWith<$Res> {
     Object? rating = freezed,
     Object? price = freezed,
     Object? publishDate = freezed,
+    Object? networkImage = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -96,15 +101,19 @@ class _$PlaceCopyWithImpl<$Res> implements $PlaceCopyWith<$Res> {
       rating: rating == freezed
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
-              as double,
+              as String,
       price: price == freezed
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
-              as double,
+              as String,
       publishDate: publishDate == freezed
           ? _value.publishDate
           : publishDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      networkImage: networkImage == freezed
+          ? _value.networkImage
+          : networkImage // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -117,9 +126,10 @@ abstract class _$PlaceCopyWith<$Res> implements $PlaceCopyWith<$Res> {
   $Res call(
       {String? id,
       String name,
-      double rating,
-      double price,
-      DateTime publishDate});
+      String rating,
+      String price,
+      DateTime publishDate,
+      String networkImage});
 }
 
 /// @nodoc
@@ -138,6 +148,7 @@ class __$PlaceCopyWithImpl<$Res> extends _$PlaceCopyWithImpl<$Res>
     Object? rating = freezed,
     Object? price = freezed,
     Object? publishDate = freezed,
+    Object? networkImage = freezed,
   }) {
     return _then(_Place(
       id: id == freezed
@@ -151,15 +162,19 @@ class __$PlaceCopyWithImpl<$Res> extends _$PlaceCopyWithImpl<$Res>
       rating: rating == freezed
           ? _value.rating
           : rating // ignore: cast_nullable_to_non_nullable
-              as double,
+              as String,
       price: price == freezed
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
-              as double,
+              as String,
       publishDate: publishDate == freezed
           ? _value.publishDate
           : publishDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      networkImage: networkImage == freezed
+          ? _value.networkImage
+          : networkImage // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -172,7 +187,8 @@ class _$_Place extends _Place with DiagnosticableTreeMixin {
       required this.name,
       required this.rating,
       required this.price,
-      required this.publishDate})
+      required this.publishDate,
+      required this.networkImage})
       : super._();
 
   factory _$_Place.fromJson(Map<String, dynamic> json) =>
@@ -183,15 +199,17 @@ class _$_Place extends _Place with DiagnosticableTreeMixin {
   @override
   final String name;
   @override
-  final double rating;
+  final String rating;
   @override
-  final double price;
+  final String price;
   @override
   final DateTime publishDate;
+  @override
+  final String networkImage;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Place(id: $id, name: $name, rating: $rating, price: $price, publishDate: $publishDate)';
+    return 'Place(id: $id, name: $name, rating: $rating, price: $price, publishDate: $publishDate, networkImage: $networkImage)';
   }
 
   @override
@@ -203,7 +221,8 @@ class _$_Place extends _Place with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('name', name))
       ..add(DiagnosticsProperty('rating', rating))
       ..add(DiagnosticsProperty('price', price))
-      ..add(DiagnosticsProperty('publishDate', publishDate));
+      ..add(DiagnosticsProperty('publishDate', publishDate))
+      ..add(DiagnosticsProperty('networkImage', networkImage));
   }
 
   @override
@@ -220,7 +239,10 @@ class _$_Place extends _Place with DiagnosticableTreeMixin {
                 const DeepCollectionEquality().equals(other.price, price)) &&
             (identical(other.publishDate, publishDate) ||
                 const DeepCollectionEquality()
-                    .equals(other.publishDate, publishDate)));
+                    .equals(other.publishDate, publishDate)) &&
+            (identical(other.networkImage, networkImage) ||
+                const DeepCollectionEquality()
+                    .equals(other.networkImage, networkImage)));
   }
 
   @override
@@ -230,7 +252,8 @@ class _$_Place extends _Place with DiagnosticableTreeMixin {
       const DeepCollectionEquality().hash(name) ^
       const DeepCollectionEquality().hash(rating) ^
       const DeepCollectionEquality().hash(price) ^
-      const DeepCollectionEquality().hash(publishDate);
+      const DeepCollectionEquality().hash(publishDate) ^
+      const DeepCollectionEquality().hash(networkImage);
 
   @JsonKey(ignore: true)
   @override
@@ -247,9 +270,10 @@ abstract class _Place extends Place {
   factory _Place(
       {String? id,
       required String name,
-      required double rating,
-      required double price,
-      required DateTime publishDate}) = _$_Place;
+      required String rating,
+      required String price,
+      required DateTime publishDate,
+      required String networkImage}) = _$_Place;
   _Place._() : super._();
 
   factory _Place.fromJson(Map<String, dynamic> json) = _$_Place.fromJson;
@@ -259,11 +283,13 @@ abstract class _Place extends Place {
   @override
   String get name => throw _privateConstructorUsedError;
   @override
-  double get rating => throw _privateConstructorUsedError;
+  String get rating => throw _privateConstructorUsedError;
   @override
-  double get price => throw _privateConstructorUsedError;
+  String get price => throw _privateConstructorUsedError;
   @override
   DateTime get publishDate => throw _privateConstructorUsedError;
+  @override
+  String get networkImage => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$PlaceCopyWith<_Place> get copyWith => throw _privateConstructorUsedError;
