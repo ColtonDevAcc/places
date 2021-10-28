@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:places/controllers/placeList_controller.dart';
 import 'package:places/models/place/place_model.dart';
