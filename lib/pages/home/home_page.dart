@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:places/controllers/auth_controller.dart';
+import 'package:places/controllers/placeList_controller.dart';
 import 'package:places/pages/add_place/add_place_page.dart';
 import 'package:places/pages/home/widgets/expensive_places_widget.dart';
 import 'package:places/pages/home/widgets/recent_places_widget.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 
-class HomePage extends HookWidget {
+final isSearchingdProvider = StateProvider<bool>((ref) => false);
+final textEditingProvider = StateProvider<TextEditingController>((ref) => TextEditingController());
+
+class HomePage extends ConsumerWidget {
   HomePage({Key? key}) : super(key: key);
-  TextEditingController textController = TextEditingController();
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ScopedReader watch) {
     final authController = context.read(authControllerProvider);
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.green,
@@ -65,16 +69,45 @@ class HomePage extends HookWidget {
               ),
               SizedBox(height: 10),
               TextField(
-                controller: textController,
+                onChanged: (text) {
+                  text.isEmpty
+                      ? watch(isSearchingdProvider).state = false
+                      : watch(isSearchingdProvider).state = true;
+                },
+                controller: watch(textEditingProvider).state,
                 decoration: InputDecoration(
                   label: Text('Type to search'),
                   icon: Icon(Icons.search, color: Colors.black),
                 ),
               ),
               SizedBox(height: 20),
-              RecentPlaces_Widget(),
-              SizedBox(height: 20),
-              Expensive_places_Widget(),
+              watch(isSearchingdProvider).state != true
+                  ? Column(
+                      children: [
+                        RecentPlaces_Widget(),
+                        SizedBox(height: 20),
+                        Expensive_places_Widget(),
+                      ],
+                    )
+                  : watch(PlaceListControllerProvider).when(
+                      data: (places) {
+                        places.sort(
+                            (a, b) => '${watch(textEditingProvider).state.text}'.compareTo(a.name));
+
+                        return Expanded(
+                          child: ListView.builder(
+                            itemBuilder: (BuildContext context, int index) {
+                              return ListTile(
+                                title: Text(places[index].name),
+                              );
+                            },
+                          ),
+                        );
+                      },
+                      loading: () => CircularProgressIndicator(),
+                      error: (e, st) {
+                        return Text(e.toString());
+                      })
             ],
           ),
         ),
