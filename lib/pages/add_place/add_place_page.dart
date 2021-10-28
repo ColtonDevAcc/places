@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:places/pages/add_place/_widgets/bottomAddPlace_widget.dart';
-
-final titleTextFieldProvider = StateProvider<String>((ref) => "");
-final priceRatingFieldProvider = StateProvider<String>((ref) => 'null');
-final overallRatingFieldProvider = StateProvider<String>((ref) => 'null');
-final networkImageProvider = StateProvider<String>((ref) => 'https://picsum.photos/600/1200');
+import 'package:places/providers/general_providers.dart';
 
 class AddPlace_Page extends ConsumerWidget {
   const AddPlace_Page({Key? key}) : super(key: key);

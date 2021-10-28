@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:places/controllers/placeList_controller.dart';
 import 'package:places/models/place/place_model.dart';
-import 'package:places/pages/add_place/add_place_page.dart';
 import 'package:places/pages/place_details/placeDetails_page.dart';
+import 'package:places/providers/general_providers.dart';
 
 class BottomEditPlace_Widget extends ConsumerWidget {
   final Place place;

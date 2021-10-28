@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:places/controllers/auth_controller.dart';
 import 'package:places/models/place/place_model.dart';
@@ -21,9 +19,7 @@ class PlaceListController extends StateNotifier<AsyncValue<List<Place>>> {
   PlaceListController(this.read, this.userID) : super(AsyncValue.loading()) {
     if (userID != null) {
       retrievePlaces();
-    } else {
-      log('user id is null');
-    }
+    } else {}
   }
 
   Future<void> retrievePlaces({querryType: PlaceQuerry}) async {
@@ -31,7 +27,6 @@ class PlaceListController extends StateNotifier<AsyncValue<List<Place>>> {
       List<Place> placeList = await read(placeRepositoryProvider).getPlaces(userID: userID!);
       if (mounted) {
         state = await AsyncValue.data(placeList);
-        log('groups is empty ${placeList.isEmpty}');
       }
     } on CustomException catch (e, st) {
       state = AsyncValue.error(e, st);

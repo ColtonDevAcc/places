@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:places/controllers/auth_controller.dart';
 import 'package:places/pages/add_place/add_place_page.dart';
@@ -5,6 +7,7 @@ import 'package:places/pages/home/widgets/expensive_places_widget.dart';
 import 'package:places/pages/home/widgets/recent_places_widget.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:places/providers/general_providers.dart';
 
 class HomePage extends HookWidget {
   HomePage({Key? key}) : super(key: key);
@@ -13,12 +16,16 @@ class HomePage extends HookWidget {
   Widget build(BuildContext context) {
     TextEditingController textController = TextEditingController();
     final authController = useProvider(authControllerProvider);
+    final imageProvider = useProvider(networkImageProvider);
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.green,
         child: Icon(Icons.add),
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) => AddPlace_Page()));
+          imageProvider.state =
+              'https://picsum.photos/400/6${Random().nextInt(10)}${Random().nextInt(10)}';
         },
       ),
       bottomNavigationBar: BottomNavigationBar(

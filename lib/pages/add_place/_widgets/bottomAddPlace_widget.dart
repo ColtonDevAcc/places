@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:places/controllers/placeList_controller.dart';
 import 'package:places/models/place/place_model.dart';
-import 'package:places/pages/add_place/add_place_page.dart';
+import 'package:places/providers/general_providers.dart';
 
 class BottomAddPlace_Widget extends ConsumerWidget {
   const BottomAddPlace_Widget({Key? key}) : super(key: key);
