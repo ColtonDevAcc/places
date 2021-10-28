@@ -29,3 +29,7 @@ you can edit a place by clicking on the corresponding card and pressing the 'Del
 ## Settings
 
 !!TODO: add a settings page
+
+## Notes
+
+The current state management needs to be reworked. I'm currently managing the state by rebuilding almost the entire widget each time. I used the consumer widget to finish the project before the deadline.

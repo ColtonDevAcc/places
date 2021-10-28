@@ -8,7 +8,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 class HomePage extends HookWidget {
   HomePage({Key? key}) : super(key: key);
-
+  TextEditingController textController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final authController = context.read(authControllerProvider);
@@ -65,6 +65,7 @@ class HomePage extends HookWidget {
               ),
               SizedBox(height: 10),
               TextField(
+                controller: textController,
                 decoration: InputDecoration(
                   label: Text('Type to search'),
                   icon: Icon(Icons.search, color: Colors.black),
