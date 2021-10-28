@@ -15,7 +15,10 @@ class BottomAddPlace_Widget extends HookWidget {
   Widget build(BuildContext context) {
     final networkImage = useProvider(networkImageProvider);
     final placeControllerProviderNotifier = useProvider(PlaceListControllerProvider.notifier);
-    final titleTextController = useTextEditingController.fromValue(TextEditingValue.empty);
+    final focusNode = useFocusNode();
+    final titleController = useTextEditingController();
+    final overallRatingFieldState = useProvider(overallRatingFieldProvider);
+    final priceRatingFieldState = useProvider(priceRatingFieldProvider);
 
     const List<String> priceRatingList = ['\$', '\$\$', '\$\$\$'];
     const List<String> overallRatingList = ['1', '2', '3', '4', '5'];
@@ -27,7 +30,8 @@ class BottomAddPlace_Widget extends HookWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           AddPlaceTextField_Widget(
-            textFieldProvider: titleTextFieldProvider,
+            titleContoller: titleController,
+            focusNode: focusNode,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -74,11 +78,11 @@ class BottomAddPlace_Widget extends HookWidget {
                 onPressed: () {
                   placeControllerProviderNotifier.publishPlace(
                     place: Place(
-                      name: titleTextController.text,
-                      rating: watch(overallRatingFieldProvider).state,
-                      price: watch(priceRatingFieldProvider).state,
+                      name: titleController.text,
+                      rating: overallRatingFieldState.state,
+                      price: priceRatingFieldState.state,
                       publishDate: Timestamp.now().toDate(),
-                      networkImage: watch(networkImageProvider).state,
+                      networkImage: networkImage.state,
                     ),
                   );
 
@@ -162,17 +166,21 @@ class AddPlaceDropDowns extends ConsumerWidget {
   }
 }
 
-class AddPlaceTextField_Widget extends ConsumerWidget {
-  final StateProvider<String> textFieldProvider;
+class AddPlaceTextField_Widget extends HookWidget {
+  final FocusNode focusNode;
+  final TextEditingController titleContoller;
 
-  const AddPlaceTextField_Widget({Key? key, required this.textFieldProvider}) : super(key: key);
+  const AddPlaceTextField_Widget({
+    required this.focusNode,
+    required this.titleContoller,
+    Key? key,
+  }) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context) {
     return TextField(
-      onChanged: (value) {
-        watch(textFieldProvider).state = value;
-      },
+      focusNode: focusNode,
+      controller: titleContoller,
       style: TextStyle(color: Colors.white),
       decoration: InputDecoration(
         hintText: 'Enter your title here...',

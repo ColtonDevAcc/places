@@ -7,13 +7,22 @@ import 'package:places/controllers/placeList_controller.dart';
 import 'package:places/models/place/place_model.dart';
 import 'package:places/pages/place_details/placeDetails_page.dart';
 import 'package:places/providers/general_providers.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
-class BottomEditPlace_Widget extends ConsumerWidget {
+class BottomEditPlace_Widget extends HookWidget {
   final Place place;
   const BottomEditPlace_Widget(this.place, {Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context) {
+    final isEditing = useProvider(isEditingProvider);
+    final networkImage = useProvider(networkImageProvider);
+    final placeControllerProviderNotifier = useProvider(PlaceListControllerProvider.notifier);
+    final focusNode = useFocusNode();
+    final titleController = useTextEditingController();
+    final overallRatingFieldState = useProvider(overallRatingFieldProvider);
+    final priceRatingFieldState = useProvider(priceRatingFieldProvider);
+
     const List<String> priceRatingList = ['\$', '\$\$', '\$\$\$'];
     const List<String> overallRatingList = ['1', '2', '3', '4', '5'];
 
@@ -24,7 +33,8 @@ class BottomEditPlace_Widget extends ConsumerWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           AddPlaceTextField_Widget(
-            textFieldProvider: titleTextFieldProvider,
+            titleController: titleController,
+            focusNode: focusNode,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -47,10 +57,10 @@ class BottomEditPlace_Widget extends ConsumerWidget {
             children: [
               TextButton(
                 onPressed: () {
-                  if (watch(isEditingProvider).state) {
-                    watch(isEditingProvider).state = false;
+                  if (isEditing.state) {
+                    isEditing.state = false;
                   } else {
-                    watch(networkImageProvider).state =
+                    networkImage.state =
                         'https://picsum.photos/400/6${Random().nextInt(10)}${Random().nextInt(10)}';
                   }
                 },
@@ -64,7 +74,7 @@ class BottomEditPlace_Widget extends ConsumerWidget {
                     padding: const EdgeInsets.all(30.0),
                     child: Center(
                       child: Text(
-                        watch(isEditingProvider).state == false ? 'New Picture' : 'Cancel',
+                        isEditing.state == false ? 'New Picture' : 'Cancel',
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
@@ -75,16 +85,17 @@ class BottomEditPlace_Widget extends ConsumerWidget {
                 onPressed: () {
                   Place updatedPlace = new Place(
                     id: place.id,
-                    name: watch(titleTextFieldProvider).state,
-                    rating: watch(priceRatingFieldProvider).state,
-                    price: watch(priceRatingFieldProvider).state,
+                    name: titleController.text,
+                    rating: overallRatingFieldState.state,
+                    price: priceRatingFieldState.state,
                     publishDate: Timestamp.now().toDate(),
                     networkImage: place.networkImage,
                   );
 
-                  watch(PlaceListControllerProvider.notifier)
-                      .updatePlace(oldPlace: place, updatedPlace: updatedPlace);
-                  watch(isEditingProvider).state = false;
+                  placeControllerProviderNotifier.updatePlace(
+                      oldPlace: place, updatedPlace: updatedPlace);
+
+                  isEditing.state = false;
 
                   Navigator.pop(context);
                 },
@@ -98,7 +109,7 @@ class BottomEditPlace_Widget extends ConsumerWidget {
                     padding: const EdgeInsets.all(30.0),
                     child: Center(
                       child: Text(
-                        watch(isEditingProvider).state ? 'Update' : 'Delete',
+                        isEditing.state ? 'Update' : 'Delete',
                         style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -166,18 +177,18 @@ class AddPlaceDropDowns extends ConsumerWidget {
   }
 }
 
-class AddPlaceTextField_Widget extends ConsumerWidget {
-  final StateProvider<String> textFieldProvider;
-
-  const AddPlaceTextField_Widget({Key? key, required this.textFieldProvider}) : super(key: key);
+class AddPlaceTextField_Widget extends HookWidget {
+  final FocusNode focusNode;
+  final TextEditingController titleController;
+  const AddPlaceTextField_Widget({required this.focusNode, required this.titleController, Key? key})
+      : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context) {
     return TextField(
-      onChanged: (value) {
-        watch(textFieldProvider).state = value;
-      },
       style: TextStyle(color: Colors.white),
+      controller: titleController,
+      focusNode: focusNode,
       decoration: InputDecoration(
         hintText: 'Enter your title here...',
         hintStyle: TextStyle(color: Colors.white.withOpacity(.8)),
