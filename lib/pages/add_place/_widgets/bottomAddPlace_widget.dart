@@ -13,7 +13,7 @@ class BottomAddPlace_Widget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ScopedReader watch) {
     const List<String> priceRatingList = ['\$', '\$\$', '\$\$\$'];
-    const List<String> overallRatingList = ['1', '2', '3'];
+    const List<String> overallRatingList = ['1', '2', '3', '4', '5'];
 
     return Padding(
       padding: const EdgeInsets.all(8.0),

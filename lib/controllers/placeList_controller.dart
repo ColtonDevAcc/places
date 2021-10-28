@@ -63,4 +63,18 @@ class PlaceListController extends StateNotifier<AsyncValue<List<Place>>> {
       ),
     );
   }
+
+  Future<void> updatePlace({oldPlace: Place, updatedPlace: Place}) async {
+    await read(placeRepositoryProvider).updatePlace(userID: userID, place: updatedPlace);
+
+    state.whenData(
+      (places) => state = AsyncValue.data(
+        places
+          ..remove(
+            oldPlace,
+          )
+          ..add(updatedPlace.copyWith(id: updatedPlace.id)),
+      ),
+    );
+  }
 }

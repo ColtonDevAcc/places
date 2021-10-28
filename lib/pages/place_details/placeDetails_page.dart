@@ -140,6 +140,6 @@ class BottomPlaceDetails_Widget extends ConsumerWidget {
               ],
             ),
           )
-        : BottomEditPlace_Widget();
+        : BottomEditPlace_Widget(place);
   }
 }

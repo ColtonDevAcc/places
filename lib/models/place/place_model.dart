@@ -33,5 +33,5 @@ abstract class Place implements _$Place {
     return Place.fromJson(data).copyWith(id: doc.id);
   }
 
-  Map<String, dynamic> toDocument() => toJson()..remove('id');
+  Map<String, dynamic> toDocument() => toJson();
 }

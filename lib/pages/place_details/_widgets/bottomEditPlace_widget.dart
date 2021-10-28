@@ -1,17 +1,21 @@
 import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:places/controllers/placeList_controller.dart';
+import 'package:places/models/place/place_model.dart';
 import 'package:places/pages/add_place/add_place_page.dart';
 import 'package:places/pages/place_details/placeDetails_page.dart';
 
 class BottomEditPlace_Widget extends ConsumerWidget {
-  const BottomEditPlace_Widget({Key? key}) : super(key: key);
+  final Place place;
+  const BottomEditPlace_Widget(this.place, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {
     const List<String> priceRatingList = ['\$', '\$\$', '\$\$\$'];
-    const List<String> overallRatingList = ['1', '2', '3'];
+    const List<String> overallRatingList = ['1', '2', '3', '4', '5'];
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -69,6 +73,16 @@ class BottomEditPlace_Widget extends ConsumerWidget {
               ),
               TextButton(
                 onPressed: () {
+                  Place updatedPlace = new Place(
+                      name: watch(titleTextFieldProvider).state,
+                      rating: watch(priceRatingFieldProvider).state,
+                      price: watch(priceRatingFieldProvider).state,
+                      publishDate: Timestamp.now().toDate(),
+                      networkImage: place.networkImage);
+
+                  watch(PlaceListControllerProvider.notifier)
+                      .updatePlace(oldPlace: place, updatedPlace: updatedPlace);
+
                   Navigator.pop(context);
                 },
                 child: Container(
