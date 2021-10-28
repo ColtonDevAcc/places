@@ -1,5 +1,7 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe
 
+import 'dart:developer';
+
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:places/extentions/firebase_extentions.dart';
 import 'package:places/models/place/place_model.dart';
@@ -7,7 +9,7 @@ import 'package:places/providers/general_providers.dart';
 
 abstract class PlaceRepsitoryBaseClass {
   Future<String> createPlace();
-  Future<String> updatePlace();
+  Future<void> updatePlace({userID: String, place: Place});
   Future<void> deletePlace({place: Place});
   Future<List<Place>> getPlaces();
 }
@@ -36,46 +38,36 @@ class PlaceRepository implements PlaceRepsitoryBaseClass {
   Future<List<Place>> getPlaces({userID: String, querryType: PlaceQuerry}) async {
     List<Place> placeList = [];
 
-    switch (querryType) {
-      case PlaceQuerry.priceA:
-        await read(firebaseFirestoreProvider)
-            .placesRefrence(userID)
-            .orderBy(
-              'publishDate',
-              descending: false,
-            )
-            .get()
-            .then(
-          (value) {
-            value.docs.forEach(
-              (place) {
-                placeList.add(Place.fromDocument(place));
-              },
-            );
-          },
-        );
-        break;
+    try {
+      await read(firebaseFirestoreProvider).placesRefrence(userID).get().then(
+        (value) {
+          value.docs.forEach(
+            (place) {
+              placeList.add(Place.fromDocument(place));
+            },
+          );
+        },
+      );
 
-      default:
-        await read(firebaseFirestoreProvider).placesRefrence(userID).get().then(
-          (value) {
-            value.docs.forEach(
-              (place) {
-                placeList.add(Place.fromDocument(place));
-              },
-            );
-          },
-        );
-        break;
+      return placeList;
+    } catch (e) {
+      log(e.toString());
+      return placeList;
     }
-
-    return placeList;
   }
 
   @override
-  Future<String> updatePlace() {
-    // TODO: implement updatePlace
-    throw UnimplementedError();
+  Future<void> updatePlace({userID: String, place: Place}) async {
+    try {
+      print('${place.id}');
+
+      await read(firebaseFirestoreProvider)
+          .placesRefrence(userID)
+          .doc(place.id)
+          .update(place.toJson());
+    } catch (e) {
+      log(e.toString());
+    }
   }
 }
 
