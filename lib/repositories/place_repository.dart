@@ -22,9 +22,12 @@ class PlaceRepository implements PlaceRepsitoryBaseClass {
 
   @override
   Future<String> createPlace({userID: String, place: Place}) async {
+    Place updatedPlace = place;
     final documentRef = await read(firebaseFirestoreProvider).placesRefrence(userID).add(
           place.toDocument(),
         );
+
+    documentRef.set(updatedPlace.copyWith(id: documentRef.id).toDocument());
 
     return documentRef.id;
   }

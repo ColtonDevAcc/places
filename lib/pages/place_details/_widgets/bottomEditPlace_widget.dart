@@ -74,14 +74,17 @@ class BottomEditPlace_Widget extends ConsumerWidget {
               TextButton(
                 onPressed: () {
                   Place updatedPlace = new Place(
-                      name: watch(titleTextFieldProvider).state,
-                      rating: watch(priceRatingFieldProvider).state,
-                      price: watch(priceRatingFieldProvider).state,
-                      publishDate: Timestamp.now().toDate(),
-                      networkImage: place.networkImage);
+                    id: place.id,
+                    name: watch(titleTextFieldProvider).state,
+                    rating: watch(priceRatingFieldProvider).state,
+                    price: watch(priceRatingFieldProvider).state,
+                    publishDate: Timestamp.now().toDate(),
+                    networkImage: place.networkImage,
+                  );
 
                   watch(PlaceListControllerProvider.notifier)
                       .updatePlace(oldPlace: place, updatedPlace: updatedPlace);
+                  watch(isEditingProvider).state = false;
 
                   Navigator.pop(context);
                 },

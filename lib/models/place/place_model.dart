@@ -19,6 +19,7 @@ abstract class Place implements _$Place {
   }) = _Place;
 
   factory Place.empty() => Place(
+        id: '',
         name: '',
         rating: '',
         price: '',
