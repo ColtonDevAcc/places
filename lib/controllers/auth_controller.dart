@@ -21,7 +21,7 @@ class AuthController extends StateNotifier<User?> {
 
   @override
   void dispose() {
-    authSubscription!.cancel();
+    authSubscription?.cancel();
     super.dispose();
   }
 
@@ -29,13 +29,13 @@ class AuthController extends StateNotifier<User?> {
     try {
       final user = read(authRepositoryProvider).getCurrentUser;
 
-      user ?? read(authRepositoryProvider).signIn();
+      user ?? await read(authRepositoryProvider).signIn();
     } catch (e) {
       print(e);
     }
   }
 
-  void signOut() {
-    read(authRepositoryProvider).signOut();
+  Future<void> signOut() async {
+    await read(authRepositoryProvider).signOut();
   }
 }

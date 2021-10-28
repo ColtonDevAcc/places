@@ -8,10 +8,11 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 class HomePage extends HookWidget {
   HomePage({Key? key}) : super(key: key);
-  TextEditingController textController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    final authController = context.read(authControllerProvider);
+    TextEditingController textController = TextEditingController();
+    final authController = useProvider(authControllerProvider);
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.green,

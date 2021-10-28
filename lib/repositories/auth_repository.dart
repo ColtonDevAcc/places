@@ -12,18 +12,18 @@ abstract class BaseAuthRepository {
 final authRepositoryProvider = Provider<AuthRepository>((ref) => AuthRepository(ref.read));
 
 class AuthRepository implements BaseAuthRepository {
-  final Reader _read;
-  const AuthRepository(this._read);
+  final Reader read;
+  const AuthRepository(this.read);
 
   @override
-  Stream<User?> get getAuthStateChanges => _read(firebaseAuthProvider).authStateChanges();
+  Stream<User?> get getAuthStateChanges => read(firebaseAuthProvider).authStateChanges();
 
   @override
-  User? get getCurrentUser => _read(firebaseAuthProvider).currentUser;
+  User? get getCurrentUser => read(firebaseAuthProvider).currentUser;
 
   @override
-  Future<void> signIn() async => await _read(firebaseAuthProvider).signInAnonymously();
+  Future<void> signIn() async => await read(firebaseAuthProvider).signInAnonymously();
 
   @override
-  Future<void> signOut() async => await _read(firebaseAuthProvider).signOut();
+  Future<void> signOut() async => await read(firebaseAuthProvider).signOut();
 }

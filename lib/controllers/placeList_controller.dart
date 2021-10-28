@@ -9,7 +9,7 @@ import 'package:places/repositories/place_repository.dart';
 final PlaceListControllerProvider =
     StateNotifierProvider<PlaceListController, AsyncValue<List<Place>>>((ref) {
   final user = ref.watch(authControllerProvider);
-  return PlaceListController(ref.read, user!.uid);
+  return PlaceListController(ref.read, user?.uid);
 });
 
 final groupListExceptionProvider = StateProvider<CustomException?>((_) => null);
