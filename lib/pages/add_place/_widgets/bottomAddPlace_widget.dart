@@ -6,12 +6,17 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:places/controllers/placeList_controller.dart';
 import 'package:places/models/place/place_model.dart';
 import 'package:places/providers/general_providers.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
-class BottomAddPlace_Widget extends ConsumerWidget {
+class BottomAddPlace_Widget extends HookWidget {
   const BottomAddPlace_Widget({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context) {
+    final networkImage = useProvider(networkImageProvider);
+    final placeControllerProviderNotifier = useProvider(PlaceListControllerProvider.notifier);
+    final titleTextController = useTextEditingController.fromValue(TextEditingValue.empty);
+
     const List<String> priceRatingList = ['\$', '\$\$', '\$\$\$'];
     const List<String> overallRatingList = ['1', '2', '3', '4', '5'];
 
@@ -45,7 +50,7 @@ class BottomAddPlace_Widget extends ConsumerWidget {
             children: [
               TextButton(
                 onPressed: () {
-                  watch(networkImageProvider).state =
+                  networkImage.state =
                       'https://picsum.photos/400/6${Random().nextInt(10)}${Random().nextInt(10)}';
                 },
                 child: Container(
@@ -67,9 +72,9 @@ class BottomAddPlace_Widget extends ConsumerWidget {
               ),
               TextButton(
                 onPressed: () {
-                  watch(PlaceListControllerProvider.notifier).publishPlace(
+                  placeControllerProviderNotifier.publishPlace(
                     place: Place(
-                      name: watch(titleTextFieldProvider).state,
+                      name: titleTextController.text,
                       rating: watch(overallRatingFieldProvider).state,
                       price: watch(priceRatingFieldProvider).state,
                       publishDate: Timestamp.now().toDate(),
